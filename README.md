@@ -39,6 +39,17 @@ Windows Registry Editor Version 5.00
 "CodeBase"="file:///PathToAssembly"  
 ```
 
+After running the .reg file you can see this changes in your window Registry under "HKEY_CURRENT_USER\Software\Microsoft\VBA\VBE\6.0\Addins64 or HKEY_CURRENT_USER\Software\Microsoft\VBA\VBE\6.0\Addins" corresponding to 32bit or 64bit VBA editor "MyVBAAddin.Connect" is present.
+
+![alt text](/images/Registry.png)
+
+
+After that when you open your VBA Editor in Add-In Manager this addin is present. Then when you check the checkBox called "Loaded/Unloaded" and click "OK", The button get created in the "Menu Bar" of VBA Editor.  
+
+![alt text](/images/Add-inManager.png)
+
+
+![alt text](/images/button.png)
 ## Built With
 
 * [Visual Studio](https://visualstudio.microsoft.com/vs/) - Vb.net Class Library Project
