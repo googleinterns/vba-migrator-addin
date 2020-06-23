@@ -5,110 +5,144 @@ Imports Microsoft.Office.Core
 Imports Microsoft.Office.Interop
 Imports Microsoft.Vbe.Interop
 
-
 ''' <summary>
-''' Each VBA editor add-in made by vb.net class library project has same template only the change in GUID(Which identified the add-in uniquely) and program id 
-'''So this his is the template of an add-in for an VB editor. i.e what happened when Startup is complete or OnConnection or OnDisconnection or OnUpdate or OnBeginShutDown.
-'''When Connection is made we initialize the add-in by adding one button in the menu-bar and after disconnection we will delete the button from there otherwise what happen
-'''our add-in got disconnected and button remains there so when the connection made next time our add-in will make same button so at the end our menu bar get conjusted with the same name button.
+'''The Object For implementing an Add-In. Users don't need to change the "GUID"
+'''for this add-in. But if you are trying to use this code and modify something 
+'''to use it as well as using the provided .dll file as one of the add-ins then you must change it.
 ''' </summary>
-
+''' <seealso class='IDTExtensibility2' />
 <ComVisible(True), Guid("BDA9ECFF-0EDE-4C1D-81D1-51F6B4FF5F50"), ProgId("MyVBAAddin.Connect")>
 Public Class Connect
-
     Implements Extensibility.IDTExtensibility2
-
+    'Interop VBE application object
     Private _VBE As VBE
     Private _AddIn As AddIn
-
-
     ' Buttons created by the add-in
     Private WithEvents _Button As CommandBarButton
 
+    ''' <summary>
+    ''' Implements the OnConnection method of the IDTExtensibility2 interface.
+    ''' Receives notification that the Add-in is being loaded.
+    ''' </summary>
+    ''' <param name="Application">
+    ''' Root object of the host application.
+    ''' </param>
+    ''' <param name="ConnectMode">
+    ''' Describes how the Add-in is being loaded.
+    ''' </param>
+    ''' <param name="AddInInst">
+    ''' Object representing this Add-in.
+    ''' </param>
+    ''' <seealso class='IDTExtensibility2' />
     Private Sub OnConnection(Application As Object, ConnectMode As Extensibility.ext_ConnectMode,
       AddInInst As Object, ByRef custom As System.Array) Implements IDTExtensibility2.OnConnection
-
         Try
-
             _VBE = DirectCast(Application, VBE)
             _AddIn = DirectCast(AddInInst, AddIn)
             Select Case ConnectMode
-
                 Case Extensibility.ext_ConnectMode.ext_cm_Startup
-
                 ' OnStartupComplete will be called
                 Case Extensibility.ext_ConnectMode.ext_cm_AfterStartup
                     InitializeAddIn()
-
             End Select
-
         Catch ex As Exception
-
             MessageBox.Show(ex.ToString())
-
         End Try
-
     End Sub
 
+    ''' <summary>
+    ''' Implements the OnDisconnection method of the IDTExtensibility2 interface.
+    ''' Receives notification that the Add-in is being unloaded.
+    ''' </summary>
+    ''' <param name="RemoveMode">
+    ''' Describes how the Add-in is being unloaded.
+    ''' </param>
+    ''' <param name="custom">
+    ''' Array of parameters that are host application specific.
+    ''' </param>
+    ''' <seealso class='IDTExtensibility2' />
     Private Sub OnDisconnection(RemoveMode As Extensibility.ext_DisconnectMode,
       ByRef custom As System.Array) Implements IDTExtensibility2.OnDisconnection
-
         Try
-
             Select Case RemoveMode
-
                 Case ext_DisconnectMode.ext_dm_HostShutdown, ext_DisconnectMode.ext_dm_UserClosed
-
                     If Not (_Button Is Nothing) Then
                         _Button.Delete()
                     End If
-
             End Select
-
         Catch e As System.Exception
             System.Windows.Forms.MessageBox.Show(e.ToString)
         End Try
     End Sub
 
+    ''' <summary>
+    ''' Implements the OnStartupComplete method of the IDTExtensibility2 interface.
+    ''' Receives notification that the host application has completed loading.
+    ''' </summary>
+    ''' <param name="custom">
+    ''' Array of parameters that are host application specific.
+    ''' </param>
+    ''' <seealso class='IDTExtensibility2' />
     Private Sub OnStartupComplete(ByRef custom As System.Array) _
       Implements IDTExtensibility2.OnStartupComplete
-
         InitializeAddIn()
-
     End Sub
 
+    ''' <summary>
+    ''' Implements the OnAddInsUpdate method of the IDTExtensibility2 interface.
+    ''' Receives notification that the collection of Add-ins has changed.
+    ''' </summary>
+    ''' <param name="custom">
+    ''' Array of parameters that are host application-specific.
+    ''' </param>
+    ''' <seealso class='IDTExtensibility2' />
     Private Sub OnAddInsUpdate(ByRef custom As System.Array) _
       Implements IDTExtensibility2.OnAddInsUpdate
 
     End Sub
 
+    ''' <summary>
+    ''' Implements the OnBeginShutdown method of the IDTExtensibility2 interface.
+    ''' Receives notification that the host application is being unloaded.
+    ''' </summary>
+    ''' <param name="custom">
+    ''' Array of parameters that are host application-specific.
+    ''' </param>
+    ''' <seealso class='IDTExtensibility2' />
     Private Sub OnBeginShutdown(ByRef custom As System.Array) _
       Implements IDTExtensibility2.OnBeginShutdown
 
     End Sub
 
+    ''' <summary>
+    ''' Whenever the connection is made Add-in needs to initialize.
+    ''' </summary>
     Private Sub InitializeAddIn()
-        'On initialization of add-in this button will create
+        'On initialization of add-in, one button called "SheetsCompatibility" will create.
         'Private WithEvents _Button As CommandBarButton declare  as a member variable of class
-        Dim standardCommandBar As CommandBar
+        Dim menuCommandBar As CommandBar
         Dim commandBarControl As CommandBarControl
-
         Try
-
-            standardCommandBar = _VBE.CommandBars.Item("Menu Bar")     'There are many command bar like standard, Menu Bar etc. So to decide in which we want to make it. 
-
-            commandBarControl = standardCommandBar.Controls.Add(MsoControlType.msoControlButton)
+            'Decide where the button will create.
+            menuCommandBar = _VBE.CommandBars.Item("Menu Bar")
+            Dim toolsCommandBar As CommandBar = _VBE.CommandBars.Item("Tools")
+            Dim toolsCommandBarControl As CommandBarControl
+            Dim position As Integer
+            ' Calculate the position of a new commandbarBarButton to the right of the "Tools"
+            'option in the menu bar.
+            toolsCommandBarControl = DirectCast(toolsCommandBar.Parent, CommandBarControl)
+            position = toolsCommandBarControl.Index + 1
+            commandBarControl = DirectCast(menuCommandBar.Controls.Add(MsoControlType.msoControlButton, System.Type.Missing, System.Type.Missing,
+            position, True), CommandBarControl)
+            'Assign control to the button which will be going to create.
             _Button = DirectCast(commandBarControl, CommandBarButton)
-            _Button.Caption = "SheetsCompatibility"              'Name of button
-            _Button.Style = MsoButtonStyle.msoButtonIconAndCaption
-            _Button.BeginGroup = True
-
+            'Personalize it as per your choice.
+            _Button.Caption = "S&heetsCompatibility"
+            _Button.Style = MsoButtonStyle.msoButtonCaption
+            _Button.BeginGroup = False
         Catch ex As Exception
-
             MessageBox.Show(ex.ToString())
-
         End Try
-
     End Sub
 
 End Class
