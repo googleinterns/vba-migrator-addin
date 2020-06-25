@@ -37,7 +37,7 @@ Microsoft Excel 2016 (16.0.5017.1000) MSO (16.0.5017.1000) 64bit
 
 * Clone this project and open it in a visual Studio having .net installed in it. After that open the **UploadToDrive.vb** and **HittingEndPoint.vb** file and change the `clientId` and `clientSecretId` in it, then build the project. **.dll** got updated after building the project according to modification done. Then Open the **registry.reg** file in your favorite text editor and just change the path of **.dll** file which will be in project folder `bin-->Debug-->MyVBAAddin.dll`, copy this file path and paste it in the registry in the line `"CodeBase"="file:///PathToAssembly"`. A sample script is given below but use the `Registry.reg` file that is given in the project. One more point to consider is:-
 
-> If VBA editor is 64bit then branch should also need to change i.e, **HKEY_CURRENT_USER\Software\Microsoft\VBA\VBE\6.0\``Addins64`\MyVBAAddin.Connect**.
+_If VBA editor is 64bit then branch should also need to change i.e, **HKEY_CURRENT_USER\Software\Microsoft\VBA\VBE\6.0\``Addins64`\MyVBAAddin.Connect**._
 
 ```
 Windows Registry Editor Version 5.00
@@ -61,7 +61,7 @@ Windows Registry Editor Version 5.00
 "CodeBase"="file:///PathToAssembly"  
 ```
 
-> If VBA editor is 32bit then branch should also need to change i.e, **HKEY_CURRENT_USER\Software\Microsoft\VBA\VBE\6.0\``Addins`\MyVBAAddin.Connect**.
+_If VBA editor is 32bit then branch should also need to change i.e, **HKEY_CURRENT_USER\Software\Microsoft\VBA\VBE\6.0\``Addins`\MyVBAAddin.Connect**._
 
 ```
 Windows Registry Editor Version 5.00
