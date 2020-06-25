@@ -35,7 +35,7 @@ Microsoft Excel 2016 (16.0.5017.1000) MSO (16.0.5017.1000) 64bit
 
 ## Deployment
 
-* Clone this project and open it in a visual Studio having .net installed in it. After that open the **UploadToDrive.vb** and **HittingEndPoint.vb** file and change the `clientId` and `clientSecretId` in it, then build the project. **.dll** got updated after building the project according to modification done. Then Open the **registry.reg** file in your favorite text editor and just change the path of **.dll** file which will be in project folder `bin-->Debug-->MyVBAAddin.dll`, copy this file path and paste it in the registry in the line `"CodeBase"="file:///PathToAssembly"`. A sample script is given below but use the `Registry.reg` file that is given in the project. One more point to consider is:-
+* Clone this project and open it in a visual Studio having .net installed in it. After that open the **UploadToDrive.vb** and **HittingEndPoint.vb** file and change the `clientId` and `clientSecretId` in it, then build the project. The **.dll** get updated after building the project according to the modification done. Then Open the **registry.reg** file in your favorite text editor and just change the path of **.dll** file which will be in this folder `bin-->Debug-->MyVBAAddin.dll`, copy this file path and paste it in the `Registry.reg` file in the line `"CodeBase"="file:///PathToAssembly"`. A sample script is given below but use the `Registry.reg` file that is provided in the project. One more point to consider is:-
 
 _If VBA editor is 64bit then branch should also need to change i.e, **HKEY_CURRENT_USER\Software\Microsoft\VBA\VBE\6.0\``Addins64`\MyVBAAddin.Connect**._
 
@@ -87,7 +87,7 @@ Windows Registry Editor Version 5.00
 
 * Double click the `.reg` file, it will ask for your consent to make changes in your registry, after proceeding further required changes will be made in your registry.
 
-* After running the `.reg` file these changes will be incorporated in the window registry under "HKEY_CURRENT_USER\Software\Microsoft\VBA\VBE\6.0\Addins64 or HKEY_CURRENT_USER\Software\Microsoft\VBA\VBE\6.0\Addins" corresponding to 32bit or 64bit VBA editor `MyVBAAddin.Connect` will present. For any further issues refer [this](https://stackoverflow.com/questions/1942626/build-add-in-for-vba-ide-using-vb-net).
+* After running the `.reg` file these changes will be incorporated in the window registry under _"HKEY_CURRENT_USER\Software\Microsoft\VBA\VBE\6.0\Addins64"_ **OR** _"HKEY_CURRENT_USER\Software\Microsoft\VBA\VBE\6.0\Addins"_ corresponding to 64bit or 32bit VBA editor `MyVBAAddin.Connect` will present there. For any further issues refer [this](https://stackoverflow.com/questions/1942626/build-add-in-for-vba-ide-using-vb-net).
 
 ![Registry](/images/Registry.jpg)
 
@@ -95,11 +95,11 @@ Windows Registry Editor Version 5.00
 
 ![Add-in Manager](/images/Add-inManager.jpg)
 
-* Then checking the Checkbox named **"Loaded/Unloaded"** and clicking **"OK"** will create a button named `SheetsCompatibility` in the "Menu Bar" of VBA editor.  
+* Then checking the Checkbox named **"Loaded/Unloaded"** and clicking **"OK"** will create a button named `SheetsCompatibility` in the **"Menu Bar"** of VBA editor.  
 
 ![Button](/images/button.png)
 
-* Event after 'button is clicked `fileUploadToDrive-->getAuthtoken-->hittingEndPoint-->windowInitialization` if the api is used in file is not supported, OR `fileUploadToDrive-->getAuthtoken-->hittingEndPoint-->messageBoxPop-Up` if all the api is supported. To see the live demo check these videos [Not-Supported](https://drive.google.com/file/d/11L-v_ym66W2XbvsDtJTX2QhFjnbWvidg/view) and [Supported](https://drive.google.com/file/d/1cyYpA5mzLUfSRR8cKB-3H2nXAcutF0ZY/view).
+* Event after this button is clicked `fileUploadToDrive-->getAuthtoken-->hittingEndPoint-->windowInitialization` if the api is used in file is not supported, OR `fileUploadToDrive-->getAuthtoken-->hittingEndPoint-->messageBoxPop-Up` if all the api is supported. To see the live demo check these videos [Not-Supported](https://drive.google.com/file/d/11L-v_ym66W2XbvsDtJTX2QhFjnbWvidg/view) and [Supported](https://drive.google.com/file/d/1cyYpA5mzLUfSRR8cKB-3H2nXAcutF0ZY/view).
 
 * Example images.
 
