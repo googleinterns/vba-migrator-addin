@@ -4,13 +4,17 @@ Imports Google.Apis.Services
 Imports System.Threading
 Imports Google.Apis.Drive.v2.Data
 
+'' <summary>
+'''To upload the file to Drive, "UploadFile("file path","userClientId","userClientSecretId")" member function of this class
+''' have to call by passing the path of the file to upload and client credentials. Follow the instructions in README.md to get the credentials. 
+''' </summary>
 Public Class uploadFileToDrive
     Private Service As DriveService = New DriveService()
     'Create Drive API service.
-    Private Sub CreateService()
-        'Set your "clientId" and "clientSecretId".
-        Dim ClientId = "601010958158-ri1h9bipsbkfjip0qjhcnatfhdupnn08.apps.googleusercontent.com"
-        Dim ClientSecret = "eeDXXNKGky5C7kX0SFwmsGXZ"
+    Private Sub CreateService(ByRef userClientId As String , ByRef userClientSecretId As String)
+        'Setting your "clientId" and "clientSecretId".
+        Dim ClientId = userClientId
+        Dim ClientSecret = userClientSecretId
         'set application name you entered when you enabled the Drive API.
         Dim MyUserCredential As UserCredential = GoogleWebAuthorizationBroker.AuthorizeAsync(New ClientSecrets() With
             {.ClientId = ClientId, .ClientSecret = ClientSecret},{DriveService.Scope.Drive}, "user", CancellationToken.None).Result
@@ -19,9 +23,9 @@ Public Class uploadFileToDrive
     End Sub
 
     'Fuction to upload the file to drive using google drive api version-2.
-    Public Function UploadFile(ByRef FilePath As String) As String
+    Public Function UploadFile(ByRef FilePath As String, ByRef userClientId As String, ByRef userClientSecretId As String) As String
         'set application name you entered when you enabled the Drive API.
-        If Service.ApplicationName <> "Google Sheets Compatibility Report" Then CreateService()
+        If Service.ApplicationName <> "Google Sheets Compatibility Report" Then CreateService(userClientId,userClientSecretId)
         'Define parameters of request.
         Const title As String = "internDemo" 
         Const description As String = "A test document"
