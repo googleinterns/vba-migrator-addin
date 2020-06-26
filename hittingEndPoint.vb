@@ -6,7 +6,7 @@ Module hittingEndPoint
     
     'TODO: To understand "getAuthorizationToken()" function see this:
     'https://www.example-code.com/vbnet/hmrc_oauth2_access_token.asp 
-    Private Function getAuthorizationToken() As String
+    Private Function getAuthorizationToken(ByRef userClientId As String , ByRef userClientSecretId As String) As String
         Dim glob As New Chilkat.Global
         Dim success As Boolean = glob.UnlockBundle("Anything for 30-day trial")
         If (success <> True) Then
@@ -18,8 +18,8 @@ Module hittingEndPoint
         oauth2.AuthorizationEndpoint = "https://accounts.google.com/o/oauth2/auth"
         oauth2.TokenEndpoint = "https://oauth2.googleapis.com/token"
         'TODO: set your "clientId" and clientSecretId".
-        oauth2.ClientId = "601010958158-ri1h9bipsbkfjip0qjhcnatfhdupnn08.apps.googleusercontent.com"
-        oauth2.ClientSecret = "eeDXXNKGky5C7kX0SFwmsGXZ"
+        oauth2.ClientId = userClientId
+        oauth2.ClientSecret = userClientSecretId
         oauth2.CodeChallenge = True
         oauth2.CodeChallengeMethod = "S256"
         oauth2.Scope = "https://www.googleapis.com/auth/spreadsheets"
@@ -57,10 +57,10 @@ Module hittingEndPoint
         Return oauth2.AccessToken
     End Function
 
-    Public Function callSheetsAPI(ByRef fileId As String) As List(Of String)
+    Public Function callSheetsAPI(ByRef fileId As String, ByRef userClientId As String , ByRef userClientSecretId As String) As List(Of String)
         Dim lines As List(Of String) = Nothing
         'Calls for Authorization Token.
-        Dim _bearerToken As String = getAuthorizationToken()
+        Dim _bearerToken As String = getAuthorizationToken(userClientId,userClientSecretId)
         If _bearerToken <> "" Then
             Dim myUri As New Uri("https://docs.google.com/spreadsheets/vbaprocessfile?fid=" + fileId)
             Dim myWebRequest = System.Net.HttpWebRequest.Create(myUri)
@@ -101,7 +101,7 @@ Module hittingEndPoint
         Dim SReader As IO.StreamReader = Nothing
         Try
             'Reading the file which was download after hitting the Endpoint.
-            SReader = New IO.StreamReader("D:\xxx.txt")
+            SReader = New IO.StreamReader("D:\Json.txt")
             'Putting the file data into a string.
             Do Until SReader.EndOfStream
                 FileData &= SReader.ReadLine()
