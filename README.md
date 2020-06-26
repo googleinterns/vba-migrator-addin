@@ -108,11 +108,11 @@ Windows Registry Editor Version 5.00
 
 * And after that, when the VBA editor is opened, this add-in will be available in the `Add-in Manager` section. 
 
-![alt text](/images/Add-inManager.jpgg)
+![alt text](/images/Add-inManager.jpg)
 
 * Then checking the Checkbox named **"Loaded/Unloaded"** and clicking **"OK"** will create a button named `SheetsCompatibility` in the **"Menu Bar"** of VBA editor.
 
-![alt text](/images/button.jpg)
+![alt text](/images/button.png)
 ## Built With
 
 * [Visual Studio](https://visualstudio.microsoft.com/vs/) - Vb.net Class Library Project
