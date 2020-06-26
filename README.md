@@ -2,32 +2,44 @@
 ### vba-migrator-addin
 VBA Editor add-in to show compatibility with Google Sheets.
 
+## Background
+
+This is a class library project implemented in the VB dot NET 4.8 framework.
+
 ## About
-For now this Add-in will give you a button in your VBA editor.
+For now, this Add-in will give you a button in your VBA editor.
 
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
 ### Prerequisites
+
 ```
-Having Window OS
+1. Having Windows OS
+2. Microsoft Excel
+```
+
+> Tested on :
+```
+Windows :
   * Edition   Windows 10 Enterprise
   * Version   1803
   * Windows Registry Editor version 5.00
 
 Microsoft Excel 2016 (16.0.5017.1000) MSO (16.0.5017.1000) 64bit
-
 ```
 
 ## Deployment
-* See the references first link to create a project in visual studio and built it, Instead of using their code in
-connect class use the code provided here.
-* After building the project you got .dll file. After that main part is make that add-in available in add-in manager of VBA Editor. So for this you need to Register .dll file in your window registry. Steps are Provided below:-
 
-Here is the registry .key script to register the Addin, note you will need to change some of the settings in order to register it properly. So open your favourite text editor copy-paste the following text in it and save it as .reg file, don't forget to change the path of the your .dll file here "CodeBase"="file:///PathToAssembly".
+* Follow this [video](https://www.youtube.com/watch?v=y81Aq4bebZU) or [article](https://www.mztools.com/articles/2012/MZ2012013.aspx) to make a project in `visual studio` and use the code provided in the `Connect.vb` file and build the project which will give a  **.dll** file. Then open your favorite text editor and copy-paste the sample script given below and save it as `Registry.reg` extension. 
+* This is a list of lines that need to be changed in the script:
+     * Wherever it is written ~~MyVBAAddin.Connect~~ change it with `{your programId(project-name.class-name)}` also need to change in code but if you have created the project of this name, there is no need to change.
+     * "Assembly"="~~MyVBAAddin~~, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" - Your assembly name. i.e Your project name
+     * "CodeBase"="~~file:///C:/Users/JYOTI/source/repos/MyVBAAddin/bin/Debug/MyVBAAddin.DLL~~" - Path of your **".dll"** file.
 
-If VBA editor is 64bit.
+_If VBA editor is 64bit then branch should also need to change i.e, **HKEY_CURRENT_USER\Software\Microsoft\VBA\VBE\6.0\``Addins64`\MyVBAAddin.Connect**._
+
 ```
 Windows Registry Editor Version 5.00
 
@@ -47,9 +59,18 @@ Windows Registry Editor Version 5.00
 "Class"="MyVBAAddin.Connect"
 "Assembly"="MyVBAAddin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
 "RuntimeVersion"="v4.0.30319"
-"CodeBase"="file:///PathToAssembly"  
+"CodeBase"="file:///C:/Users/JYOTI/source/repos/MyVBAAddin/bin/Debug/MyVBAAddin.DLL"  
+
+[HKEY_CURRENT_USER\Software\Microsoft\VBA\VBE\6.0\Addins64\MyVBAAddin.Connect\InprocServer32\1.0.0.0]
+"Class"="MyVBAAddin.Connect"
+"Assembly"="MyVBAAddin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+"RuntimeVersion"="v4.0.30319"
+"CodeBase"="file:///C:/Users/JYOTI/source/repos/MyVBAAddin/bin/Debug/MyVBAAddin.DLL"
+
 ```
-If VBA editor is 32bit.
+
+_If VBA editor is 32bit then branch should also need to change i.e, **HKEY_CURRENT_USER\Software\Microsoft\VBA\VBE\6.0\``Addins`\MyVBAAddin.Connect**._
+
 ```
 Windows Registry Editor Version 5.00
 
@@ -69,20 +90,29 @@ Windows Registry Editor Version 5.00
 "Class"="MyVBAAddin.Connect"
 "Assembly"="MyVBAAddin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
 "RuntimeVersion"="v4.0.30319"
-"CodeBase"="file:///PathToAssembly"  
+"CodeBase"="file:///C:/Users/JYOTI/source/repos/MyVBAAddin/bin/Debug/MyVBAAddin.DLL"  
+
+[HKEY_CURRENT_USER\Software\Microsoft\VBA\VBE\6.0\Addins\MyVBAAddin.Connect\InprocServer32\1.0.0.0]
+"Class"="MyVBAAddin.Connect"
+"Assembly"="MyVBAAddin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+"RuntimeVersion"="v4.0.30319"
+"CodeBase"="file:///C:/Users/JYOTI/source/repos/MyVBAAddin/bin/Debug/MyVBAAddin.DLL"
 ```
 
-After running the .reg file you can see this changes in your window Registry under "HKEY_CURRENT_USER\Software\Microsoft\VBA\VBE\6.0\Addins64 or HKEY_CURRENT_USER\Software\Microsoft\VBA\VBE\6.0\Addins" corresponding to 32bit or 64bit VBA editor "MyVBAAddin.Connect" is present. For any further issues refer [this](https://stackoverflow.com/questions/1942626/build-add-in-for-vba-ide-using-vb-net).
+* Double click the `.reg` file, it will ask for your consent to make changes in your registry, after proceeding further required changes will be made in your registry.
 
-![alt text](/images/Registry.png)
+* After running the `.reg` file these changes will be incorporated in the window registry under _"HKEY_CURRENT_USER\Software\Microsoft\VBA\VBE\6.0\Addins64"_ **OR** _"HKEY_CURRENT_USER\Software\Microsoft\VBA\VBE\6.0\Addins"_ corresponding to 64bit or 32bit VBA editor `{MyVBAAddin.Connect(Your programId)}` will present there. For any further issues refer [this](https://stackoverflow.com/questions/1942626/build-add-in-for-vba-ide-using-vb-net).
 
-
-After that when you open your VBA Editor in Add-In Manager this addin is present. Then when you check the checkBox called "Loaded/Unloaded" and click "OK", The button get created in the "Menu Bar" of VBA Editor.  
-
-![alt text](/images/Add-inManager.png)
+![alt text](/images/Registry.jpg)
 
 
-![alt text](/images/button.png)
+* And after that, when the VBA editor is opened, this add-in will be available in the `Add-in Manager` section. 
+
+![alt text](/images/Add-inManager.jpgg)
+
+* Then checking the Checkbox named **"Loaded/Unloaded"** and clicking **"OK"** will create a button named `SheetsCompatibility` in the **"Menu Bar"** of VBA editor.
+
+![alt text](/images/button.jpg)
 ## Built With
 
 * [Visual Studio](https://visualstudio.microsoft.com/vs/) - Vb.net Class Library Project
@@ -91,6 +121,7 @@ After that when you open your VBA Editor in Add-In Manager this addin is present
 ## References
 
 * [Add-in](https://www.mztools.com/articles/2012/MZ2012013.aspx) - How to make add-in for VBA Editor
+* [Add-in](https://www.youtube.com/watch?v=y81Aq4bebZU) - YouTube link to make add-in project in Visual Studio
 * [Button](https://www.mztools.com/articles/2012/MZ2012015.aspx) - How to make different types of button in VBA Editor
 * [Tool Window](https://www.mztools.com/articles/2012/MZ2012017.aspx) - How to make Tool window in VBA Editor
 
