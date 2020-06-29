@@ -2,9 +2,7 @@
 Imports System.Windows.Forms
 
 Friend Class UserControlToolWindow1
-
     Private _VBE As VBE
-
     Friend Sub Initialize(ByVal vbe As VBE, ByRef lines As List(Of String))
         _VBE = vbe
         'Write the data to the window.
