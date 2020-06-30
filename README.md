@@ -1,8 +1,8 @@
 ## ToolWindow for VBA editor
 
-* UserControlToolWindow1.vb describes what happens when the window is initialized and when some action is performed in windows.
+* UserControlToolWindow.vb describes what happens when the window is initialized and when some action is performed in windows.
 
-* User-control tool-window design can be created manually like dragging-dropping and the property can be set in the property window, corresponding to that system generates the code in file UserControlHost.Designer.vb and UserControlToolWindow1.Designer.vb.
+* User-control tool-window design can be created manually like dragging-dropping and the property can be set in the property window, corresponding to that system generates the code in file UserControlHost.Designer.vb and UserControlToolWindow.Designer.vb.
 
 * For file UserControlHost.vb, refer to [this](https://www.mztools.com/articles/2012/MZ2012017.aspx).
 
