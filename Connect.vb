@@ -157,8 +157,9 @@ Public Class Connect
     ''' String you need to put as a header on the window.
     ''' </param>
     ''' <param name="toolWindowGuid">
-    ''' This uniquely identified a particular window can be used to store 
-    ''' information of it like size, position, etc.
+    ''' This uniquely identified a particular window and it is used to store the
+    ''' information of it like size, position, etc. To create guid in visual studio
+    ''' click 'Tools-->Create Guid' copy and use it.
     ''' </param>
     ''' <param name="toolWindowUserControl">
     ''' Windows to host.
@@ -169,7 +170,7 @@ Public Class Connect
         Dim userControlHost As UserControlHost
         Dim _SummaryWindow As Window
         Dim progId As String
-        ' IMPORTANT: ensure that you use the same ProgId value used in the ProgId attribute of the UserControlHost 
+        'Ensure that you use the same ProgId value used in the ProgId attribute of the UserControlHost 
         progId = "MyVBAAddin.UserControlHost"
         _SummaryWindow = _VBE.Windows.CreateToolWindow(_AddIn, progId, toolWindowCaption, toolWindowGuid, userControlObject)
         userControlHost = DirectCast(userControlObject, UserControlHost)
@@ -179,7 +180,7 @@ Public Class Connect
     End Function
 
     ''' <summary>
-    ''' Implementation of the click event of the button.
+    ''' Implementation of the click event of the button created by add-in in "MENU BAR".
     ''' </summary>
     ''' <param name="Ctrl"></param>
     ''' <param name="CancelDefault"></param>
@@ -187,13 +188,15 @@ Public Class Connect
       ByRef CancelDefault As Boolean) Handles _Button.Click
         'If the button is clicked first time.
         If count = 1 Then
+            '@todo If the drive 'D' is not available to make a file in it, then one should change this path.
+            Const pathToCopyFile As String = "D:\GoogleDrive.xlsm"
             'Make a copy of the file active in excel.
-            My.Computer.FileSystem.CopyFile(_VBE.ActiveVBProject.FileName, "D:\GoogleDrive.xlsm", True)
+            My.Computer.FileSystem.CopyFile(_VBE.ActiveVBProject.FileName,pathToCopyFile, True)
             Dim letsTry As uploadFileToDrive = New uploadFileToDrive()
             'Upload the file on drive.
-            fileId = letsTry.UploadFile("D:\GoogleDrive.xlsm")
+            fileId = letsTry.UploadFile(pathToCopyFile)
             'Delete that file.
-            My.Computer.FileSystem.DeleteFile("D:\GoogleDrive.xlsm")
+            My.Computer.FileSystem.DeleteFile(pathToCopyFile)
             'If no error ocurred then fileId is not empty.
             If fileId <> "" Then
                 lines = hittingEndPoint.callSheetsAPI(fileId)
