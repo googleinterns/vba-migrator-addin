@@ -4,10 +4,14 @@ Imports System.IO
 Imports System.Text
 Module hittingEndPoint
     
-    'TODO: To understand "getAuthorizationToken()" function see this:
+    'To understand "getAuthorizationToken()" function see this:
     'https://www.example-code.com/vbnet/hmrc_oauth2_access_token.asp 
     Private Function getAuthorizationToken(ByRef userClientId As String , ByRef userClientSecretId As String) As String
         Dim glob As New Chilkat.Global
+        Const _authorizationEndpoint As String = "https://accounts.google.com/o/oauth2/auth"
+        Const _tokenEndpoint As String = "https://oauth2.googleapis.com/token"
+        Const _scope As String = "https://www.googleapis.com/auth/spreadsheets"
+        Const _codeChallengeMethod As String = "S256"
         Dim success As Boolean = glob.UnlockBundle("Anything for 30-day trial")
         If (success <> True) Then
             MessageBox.Show(glob.LastErrorText)
@@ -15,14 +19,14 @@ Module hittingEndPoint
         End If
         Dim oauth2 As New Chilkat.OAuth2
         oauth2.ListenPort = 55568
-        oauth2.AuthorizationEndpoint = "https://accounts.google.com/o/oauth2/auth"
-        oauth2.TokenEndpoint = "https://oauth2.googleapis.com/token"
-        'TODO: set your "clientId" and clientSecretId".
+        oauth2.AuthorizationEndpoint = _authorizationEndpoint
+        oauth2.TokenEndpoint = _tokenEndpoint
+        'setting "clientId" and clientSecretId".
         oauth2.ClientId = userClientId
         oauth2.ClientSecret = userClientSecretId
         oauth2.CodeChallenge = True
-        oauth2.CodeChallengeMethod = "S256"
-        oauth2.Scope = "https://www.googleapis.com/auth/spreadsheets"
+        oauth2.CodeChallengeMethod = _codeChallengeMethod
+        oauth2.Scope = _scope
         Dim url As String = oauth2.StartAuth()
         If (oauth2.LastMethodSuccess <> True) Then
             MessageBox.Show(oauth2.LastErrorText)
@@ -59,10 +63,11 @@ Module hittingEndPoint
 
     Public Function callSheetsAPI(ByRef fileId As String, ByRef userClientId As String , ByRef userClientSecretId As String) As List(Of String)
         Dim lines As List(Of String) = Nothing
+        Const URI As String = "https://docs.google.com/spreadsheets/vbaprocessfile?fid=" + fileId
         'Calls for Authorization Token.
         Dim _bearerToken As String = getAuthorizationToken(userClientId,userClientSecretId)
         If _bearerToken <> "" Then
-            Dim myUri As New Uri("https://docs.google.com/spreadsheets/vbaprocessfile?fid=" + fileId)
+            Dim myUri As New Uri(URI)
             Dim myWebRequest = System.Net.HttpWebRequest.Create(myUri)
             Dim myHttpWebRequest = CType(myWebRequest, System.Net.HttpWebRequest)
             myHttpWebRequest.Method = "GET"
@@ -72,10 +77,11 @@ Module hittingEndPoint
             'Collectting the response after request.
             Dim responseStream As Stream = myWebResponse.GetResponseStream()
             If responseStream Is Nothing Then
-                MessageBox.Show("Api didn't respond.")
+                MessageBox.Show("Sheets Api didn't respond.")
                 Return lines
             End If
-            'Creating a file to store data from the response stream.
+            'Create a file to store data from the response stream.
+            '@TODO If drive 'D' is not available to create a file then one should change the path.
             Dim Json As New FileStream("D:\Json.txt", FileMode.Create)
             Dim read As Byte() = New Byte(255) {}
             Dim count As Integer = responseStream.Read(read, 0, read.Length)
@@ -93,30 +99,12 @@ Module hittingEndPoint
         End If
         Return lines
     End Function
-
+    
     Private Function parseTheFile() As List(Of String)
+        'Reading the downloaded file data into a string.
+        Const FileData As String = readFileData()
         'Declaration of local variable needed to store and read the file.
-        Dim lines As New List(Of String)
-        Dim FileData As String = String.Empty
-        Dim SReader As IO.StreamReader = Nothing
-        Try
-            'Reading the file which was download after hitting the Endpoint.
-            SReader = New IO.StreamReader("D:\Json.txt")
-            'Putting the file data into a string.
-            Do Until SReader.EndOfStream
-                FileData &= SReader.ReadLine()
-            Loop
-            'Catching exception while reading the file
-        Catch ex As Exception
-            MessageBox.Show("Error: " & ex.Message)
-            Return lines
-        Finally
-            'Closing Stream Reader.
-            If SReader IsNot Nothing Then
-                SReader.Close()
-                SReader.Dispose()
-            End If
-        End Try 
+        Dim lines As New List(Of String) 
         Dim index As Integer
         Dim tempStr As String = Nothing
         For index = 0 To FileData.Length - 1 Step +1
@@ -173,4 +161,28 @@ Module hittingEndPoint
         Return lines
     End Function
 
+    Private Function readFileData() As String
+        Dim FileData As String = String.Empty
+        Dim SReader As IO.StreamReader = Nothing
+        Try
+            'Reading the file which was download after hitting the Endpoint.
+            SReader = New IO.StreamReader("D:\Json.txt")
+            'Putting the file data into a string.
+            Do Until SReader.EndOfStream
+                FileData &= SReader.ReadLine()
+            Loop
+            'Catching exception while reading the file
+        Catch ex As Exception
+            MessageBox.Show("Error: " & ex.Message)
+            Return ""
+        Finally
+            'Closing Stream Reader.
+            If SReader IsNot Nothing Then
+                SReader.Close()
+                SReader.Dispose()
+            End If
+        End Try
+        Return FileData
+    End Function
+    
 End Module
