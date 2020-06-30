@@ -1,7 +1,7 @@
 ﻿Imports Microsoft.Vbe.Interop
 Imports System.Windows.Forms
 
-Friend Class UserControlToolWindow1
+Friend Class UserControlToolWindow
     Private _VBE As VBE
     Friend Sub Initialize(ByVal vbe As VBE, ByRef lines As List(Of String))
         _VBE = vbe
