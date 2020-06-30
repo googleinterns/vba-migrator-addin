@@ -158,7 +158,7 @@ Public Class Connect
     ''' </param>
     ''' <param name="toolWindowGuid">
     ''' This uniquely identified a particular window and it is used to store the
-    ''' information of it like size, position, etc. To create guid in visual studio
+    ''' information of it, like its size, position, etc. To create guid in visual studio
     ''' click 'Tools-->Create Guid' copy and use it.
     ''' </param>
     ''' <param name="toolWindowUserControl">
@@ -207,13 +207,13 @@ Public Class Connect
         'if the data list count item is not zero then all Api in the file is not supported.
         If lines.Count <> 0 Then
             Dim userControlObject As Object = Nothing
-            Dim userControlToolWindow1 As UserControlToolWindow1
+            Dim userControlToolWindow As UserControlToolWindow
             Try
                     'If button is clicked the first time then window needs to initialize.
                 If _ApiSummaryWindow Is Nothing Then
-                    userControlToolWindow1 = New UserControlToolWindow1()
-                    _ApiSummaryWindow = CreateToolWindow("Report of API used in this project", "0EB93108-D229-4F6F-82C5-0B96AFFBB9C5", userControlToolWindow1)
-                    userControlToolWindow1.Initialize(_VBE, lines)
+                    userControlToolWindow = New UserControlToolWindow()
+                    _ApiSummaryWindow = CreateToolWindow("Report of API used in this project", "0EB93108-D229-4F6F-82C5-0B96AFFBB9C5", userControlToolWindow)
+                    userControlToolWindow.Initialize(_VBE, lines)
                     count += 1
                 Else
                     'If the window is previously initialized then make it visible.
