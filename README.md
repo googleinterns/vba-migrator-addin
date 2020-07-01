@@ -1,10 +1,10 @@
-# Project Title
 ### vba-migrator-addin
 VBA Editor add-in to show compatibility with Google Sheets.
 
 ## Background
 
-This is a class library project implemented in the VB dot NET 4.8 framework.
+* This is a class library project implemented in the VB dot NET 4.8 framework.
+* Google drive API is used to upload the file to drive. 
 
 ## Getting Started
 
@@ -111,6 +111,14 @@ Windows Registry Editor Version 5.00
 * Then checking the Checkbox named **"Loaded/Unloaded"** and clicking **"OK"** will create a button named `SheetsCompatibility` in the **"Menu Bar"** of VBA editor.
 
 ![alt text](/images/button.png)
+
+#### Upload file to drive
+  * The `uploadFileToDrive.vb` uses the google drive API to upload the file to drive.
+  * To use the google drive API one should have a google account.
+  * To import the libraries in it, the user needs to install  "Google.Apis.Drive.v2" in the project using the NuGet Package manager console using the command `Install-Package Google.Apis.Drive.v2`.
+  * To enable the drive API for their account, the user needs to refer to this [video](https://www.youtube.com/watch?v=xtqpWG5KDXY&t=1s") which will guide them to enable the drive API for their account. This is the drive API [Console](https://pantheon.corp.google.com/flows/enableapi?apiid=drive&pli=1&debugUI=DEVELOPERS), where the user will get the `clientId` and `clientSecretId` after following [this](https://www.youtube.com/watch?v=xtqpWG5KDXY&t=1s") video. 
+  * Now, the user can call the function `UploadFile(filePath,userClientId,userClientSecretId)` to upload the file to the drive, by providing the file path and user credentials as an argument.
+
 ## Built With
 
 * [Visual Studio](https://visualstudio.microsoft.com/vs/) - Vb.net Class Library Project
@@ -122,4 +130,5 @@ Windows Registry Editor Version 5.00
 * [Add-in](https://www.youtube.com/watch?v=y81Aq4bebZU) - YouTube link to make add-in project in Visual Studio
 * [Button](https://www.mztools.com/articles/2012/MZ2012015.aspx) - How to make different types of button in VBA Editor
 * [Tool Window](https://www.mztools.com/articles/2012/MZ2012017.aspx) - How to make Tool window in VBA Editor
+
 
