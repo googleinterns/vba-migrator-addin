@@ -5,6 +5,7 @@ VBA Editor add-in to show compatibility with Google Sheets.
 
 * This is a class library project implemented in the VB dot NET 4.8 framework.
 * Google drive API is used to upload the file to drive. 
+* Sheets API is used to generate the report of the support type of API used in the macros of the `'.xlsm'` file. 
 
 ## Getting Started
 
@@ -119,6 +120,14 @@ Windows Registry Editor Version 5.00
   * To enable the drive API for their account, the user needs to refer to this [video](https://www.youtube.com/watch?v=xtqpWG5KDXY&t=1s") which will guide them to enable the drive API for their account. This is the drive API [Console](https://pantheon.corp.google.com/flows/enableapi?apiid=drive&pli=1&debugUI=DEVELOPERS), where the user will get the `clientId` and `clientSecretId` after following [this](https://www.youtube.com/watch?v=xtqpWG5KDXY&t=1s") video. 
   * Now, the user can call the function `UploadFile(filePath,userClientId,userClientSecretId)` to upload the file to the drive, by providing the file path and user credentials as an argument.
 
+#### Hitting The End Point
+
+* In this module the **`Sheets API`** is called, which will give the information about the support type of API used in the macros of `.xlsm` in  `.txt` format.
+  
+* Sheets API is not public, so it needs authorization when a user hits it. So `getAuthorizationToken(userClientId,userClientSecretId)` function is used to get the "Bearer Authorization Token". This function needs "clientId" and "clientSecretId" as an argument and it can be obtained from [this](https://github.com/googleinterns/vba-migrator-addin/blob/Upload-File/README.md) instructions.
+
+ * `parseTheFile()` function parses the downloaded file after hitting the endpoint and provides the list of data needed.
+ 
 ## Built With
 
 * [Visual Studio](https://visualstudio.microsoft.com/vs/) - Vb.net Class Library Project
