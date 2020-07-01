@@ -13,16 +13,23 @@ Imports System.Drawing
 
 'This usercontrol class needs to register in window registry, so to uniquely identify we provide Guid here.
 'We can get a new Guid by the following procedure click(Tools->Create Guid) in visual studio.
+'@todo Change the name of the add-in.
 <ComVisible(True), Guid("0EB93108-D229-4F6F-82C5-0B96AFFBB9C5"), ProgId("MyVBAAddin.UserControlHost")>
 Public Class UserControlHost
     Private Class SubClassingWindow
+        'The NativeWindow class provides the following properties and methods to manage handles: 
+        'Handle, CreateHandle, AssignHandle, DestroyHandle, and ReleaseHandle.
         Inherits System.Windows.Forms.NativeWindow
+        'An event is a signal that informs an application that something important has occurred.
+        'For example, when a user clicks a control on a window, the window can raise a Click event 
+        'and call a procedure that handles the event. Here it call '_subClassingWindow_CallBackProc()' procedure.
         Public Event CallBackProc(ByRef m As Message)
-       
+        'The IntPtr is the platform-specific type that is used to represent a pointer or a handle.
+        'Here this new procedure is used to hold the handle of the platform on which it is running.
         Public Sub New(ByVal handle As IntPtr)
             MyBase.AssignHandle(handle)
         End Sub
-
+        
         Protected Overrides Sub WndProc(ByRef m As Message)
             Const WM_SIZE As Integer = &H350
             If m.Msg = WM_SIZE Then
