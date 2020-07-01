@@ -1,13 +1,24 @@
 ﻿Imports System.Runtime.InteropServices
 Imports System.Windows.Forms
 Imports System.Drawing
+''' <summary>
+'''Toolwindows are created by calling the VBE.Windows.CreateToolWindow method.
+'''This method returns a VBE.Window instance, which can be made visible setting its Window.Visible property to True
+'''Toolwindows host ActiveX UserDocuments inside, but UserDocuments don't exist in .NET. Fortunately,
+'''Usercontrols can be used instead, with one caveat: the toolwindow doesn't resize a UserControl 
+'''automatically as it does with a UserDocument when creating add-ins with Visual Basic 6.0.  
+'''So to handle the size, position of any Toolwindow we created in vb.net, we need one usercontrol class.
+'''To know more about this class please refer to this article https://www.mztools.com/articles/2012/MZ2012017.aspx.
+''' </summary>
 
+'This usercontrol class needs to register in window registry, so to uniquely identify we provide Guid here.
+'We can get a new Guid by the following procedure click(Tools->Create Guid) in visual studio.
 <ComVisible(True), Guid("0EB93108-D229-4F6F-82C5-0B96AFFBB9C5"), ProgId("MyVBAAddin.UserControlHost")>
 Public Class UserControlHost
     Private Class SubClassingWindow
         Inherits System.Windows.Forms.NativeWindow
         Public Event CallBackProc(ByRef m As Message)
-
+       
         Public Sub New(ByVal handle As IntPtr)
             MyBase.AssignHandle(handle)
         End Sub
@@ -47,7 +58,9 @@ Public Class UserControlHost
         Me.Controls.Add(control)
         AdjustSize()
     End Sub
-
+    
+    'This class needs to do subclassing with the parent window to detect when the size is changed.
+    'So this function is used to handle the event when the user changes the size.
     Private Sub _subClassingWindow_CallBackProc(ByRef m As System.Windows.Forms.Message) Handles _subClassingWindow.CallBackProc
         AdjustSize()
     End Sub
@@ -58,7 +71,9 @@ Public Class UserControlHost
             Me.Size = New Size(tRect.Right - tRect.Left, tRect.Bottom - tRect.Top)
         End If
     End Sub
-
+    
+    'This function Previews a keyboard message.You can read more about this function from here
+    'https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.control.processkeypreview?view=netcore-3.1
     Protected Overrides Function ProcessKeyPreview(ByRef m As System.Windows.Forms.Message) As Boolean
         Const WM_KEYDOWN As Integer = &H350
         Dim result As Boolean = False
