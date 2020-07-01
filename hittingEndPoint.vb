@@ -3,6 +3,8 @@ Imports System.Net
 Imports System.IO
 Imports System.Text
 Module hittingEndPoint
+    '@TODO If drive 'D' is not available to create a file then one should change the path.
+    Private Const _filePath As String = "D:\Json.txt"
     
     'To understand "getAuthorizationToken()" function see this:
     'https://www.example-code.com/vbnet/hmrc_oauth2_access_token.asp 
@@ -63,11 +65,11 @@ Module hittingEndPoint
 
     Public Function callSheetsAPI(ByRef fileId As String, ByRef userClientId As String , ByRef userClientSecretId As String) As List(Of String)
         Dim lines As List(Of String) = Nothing
-        Const URI As String = "https://docs.google.com/spreadsheets/vbaprocessfile?fid=" + fileId
+        Const _uri As String = "https://docs.google.com/spreadsheets/vbaprocessfile?fid=" + fileId
         'Calls for Authorization Token.
         Dim _bearerToken As String = getAuthorizationToken(userClientId,userClientSecretId)
         If _bearerToken <> "" Then
-            Dim myUri As New Uri(URI)
+            Dim myUri As New Uri(_uri)
             Dim myWebRequest = System.Net.HttpWebRequest.Create(myUri)
             Dim myHttpWebRequest = CType(myWebRequest, System.Net.HttpWebRequest)
             myHttpWebRequest.Method = "GET"
@@ -81,8 +83,7 @@ Module hittingEndPoint
                 Return lines
             End If
             'Create a file to store data from the response stream.
-            '@TODO If drive 'D' is not available to create a file then one should change the path.
-            Dim Json As New FileStream("D:\Json.txt", FileMode.Create)
+            Dim Json As New FileStream(_filePath, FileMode.Create)
             Dim read As Byte() = New Byte(255) {}
             Dim count As Integer = responseStream.Read(read, 0, read.Length)
             'Writing the response data in the file created above.
@@ -166,7 +167,7 @@ Module hittingEndPoint
         Dim SReader As IO.StreamReader = Nothing
         Try
             'Reading the file which was download after hitting the Endpoint.
-            SReader = New IO.StreamReader("D:\Json.txt")
+            SReader = New IO.StreamReader(_filePath)
             'Putting the file data into a string.
             Do Until SReader.EndOfStream
                 FileData &= SReader.ReadLine()
