@@ -11,7 +11,7 @@ Imports Microsoft.Vbe.Interop
 '''to use it as well as using the provided .dll file as one of the add-ins then you must change it.
 ''' </summary>
 ''' <seealso class='IDTExtensibility2' />
-<ComVisible(True), Guid("BDA9ECFF-0EDE-4C1D-81D1-51F6B4FF5F50"), ProgId("MyVBAAddin.Connect")>
+<ComVisible(True), Guid("B3C60B32-6851-472F-A98E-99278ED7B539"), ProgId("SheetsCompatibilityAddIn.Connect")>
 Public Class Connect
     Implements Extensibility.IDTExtensibility2
     'Interop VBE application object
