@@ -19,11 +19,6 @@ Public Class Connect
     Private _AddIn As AddIn
     ' Buttons created by the add-in
     Private WithEvents _Button As CommandBarButton
-     'Window created by add-in
-    Private _ApiSummaryWindow As Window
-    Dim count As Integer = 1
-    Dim lines As List(Of String) = Nothing
-    Dim fileId As String = ""
     
     ''' <summary>
     ''' Implements the OnConnection method of the IDTExtensibility2 interface.
@@ -148,37 +143,8 @@ Public Class Connect
         Catch ex As Exception
             MessageBox.Show(ex.ToString())
         End Try
-    End Sub
+    End Sub 
     
-     ''' <summary>
-    ''' Host a window by UserControlHost.
-    ''' </summary>
-    ''' <param name="toolWindowCaption">
-    ''' String you need to put as a header on the window.
-    ''' </param>
-    ''' <param name="toolWindowGuid">
-    ''' This uniquely identified a particular window and it is used to store the
-    ''' information of it, like its size, position, etc. To create guid in visual studio
-    ''' click 'Tools-->Create Guid' copy and use it.
-    ''' </param>
-    ''' <param name="toolWindowUserControl">
-    ''' Windows to host.
-    ''' </param>
-    Private Function CreateToolWindow(ByVal toolWindowCaption As String, ByVal toolWindowGuid As String,
-      ByVal toolWindowUserControl As UserControl) As Window
-        Dim userControlObject As Object = Nothing
-        Dim userControlHost As UserControlHost
-        Dim _SummaryWindow As Window
-        Dim progId As String
-        'Ensure that you use the same ProgId value used in the ProgId attribute of the UserControlHost 
-        progId = "MyVBAAddin.UserControlHost"
-        _SummaryWindow = _VBE.Windows.CreateToolWindow(_AddIn, progId, toolWindowCaption, toolWindowGuid, userControlObject)
-        userControlHost = DirectCast(userControlObject, UserControlHost)
-        _SummaryWindow.Visible = True
-        userControlHost.AddUserControl(toolWindowUserControl)
-        Return _SummaryWindow
-    End Function
-
     ''' <summary>
     ''' Implementation of the click event of the button created by add-in in "MENU BAR".
     ''' </summary>
@@ -186,47 +152,9 @@ Public Class Connect
     ''' <param name="CancelDefault"></param>
     Private Sub _Button_Click(Ctrl As Microsoft.Office.Core.CommandBarButton,
       ByRef CancelDefault As Boolean) Handles _Button.Click
-        'If the button is clicked first time.
-        If count = 1 Then
-            '@todo If the drive 'D' is not available to make a file in it, then one should change this path.
-            Const pathToCopyFile As String = "D:\GoogleDrive.xlsm"
-            'Make a copy of the file active in excel.
-            My.Computer.FileSystem.CopyFile(_VBE.ActiveVBProject.FileName,pathToCopyFile, True)
-            Dim letsTry As uploadFileToDrive = New uploadFileToDrive()
-            'Upload the file on drive.
-            fileId = letsTry.UploadFile(pathToCopyFile)
-            'Delete that file.
-            My.Computer.FileSystem.DeleteFile(pathToCopyFile)
-            'If no error ocurred then fileId is not empty.
-            If fileId <> "" Then
-                lines = hittingEndPoint.callSheetsAPI(fileId)
-            Else
-                Exit Sub
-            End If
-        End If
-        'if the data list count item is not zero then all Api in the file is not supported.
-        If lines.Count <> 0 Then
-            Dim userControlObject As Object = Nothing
-            Dim userControlToolWindow As UserControlToolWindow
-            Try
-                    'If button is clicked the first time then window needs to initialize.
-                If _ApiSummaryWindow Is Nothing Then
-                    userControlToolWindow = New UserControlToolWindow()
-                    _ApiSummaryWindow = CreateToolWindow("Report of API used in this project", "0EB93108-D229-4F6F-82C5-0B96AFFBB9C5", userControlToolWindow)
-                    userControlToolWindow.Initialize(_VBE, lines)
-                    count += 1
-                Else
-                    'If the window is previously initialized then make it visible.
-                    _ApiSummaryWindow.Visible = True
-                End If
-            Catch ex As Exception
-                MessageBox.Show(ex.ToString)
-            End Try
-            'if the data list is empty and filed id is not empty then all API used in the file is supported.
-        ElseIf fileId <> "" Then
-            MessageBox.Show("Fully Compatible!!")
-            count += 1
-        End If
+        Dim UserForm As userForm = New userForm()
+        'Initialize the user form to get user credentials.
+        UserForm.Initialize(_VBE, _AddIn)
     End Sub
 
 End Class
