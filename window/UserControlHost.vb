@@ -14,7 +14,7 @@ Imports System.Drawing
 'This usercontrol class needs to register in window registry, so to uniquely identify we provide Guid here.
 'We can get a new Guid by the following procedure click(Tools->Create Guid) in visual studio.
 '@todo Change the name of the add-in.
-<ComVisible(True), Guid("0EB93108-D229-4F6F-82C5-0B96AFFBB9C5"), ProgId("MyVBAAddin.UserControlHost")>
+<ComVisible(True), Guid("150B0A49-A7CD-467B-BCF2-FB47A87E68C4"), ProgId("SheetsCompatibilityAddIn.UserControlHost")>
 Public Class UserControlHost
     Private Class SubClassingWindow
         'The NativeWindow class provides the following properties and methods to manage handles: 
