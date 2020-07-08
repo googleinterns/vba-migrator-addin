@@ -8,7 +8,7 @@ Imports Google.Apis.Drive.v2.Data
 '''To upload the file to Drive, "UploadFile("file path","userClientId","userClientSecretId")" member function of this class
 ''' have to call by passing the path of the file to upload and client credentials. Follow the instructions in README.md to get the credentials. 
 ''' </summary>
-Public Class uploadFileToDrive
+Public Module uploadFileToDrive
     Private Service As DriveService = New DriveService()
     'Create Drive API service.
     Private Sub CreateService(ByRef userClientId As String , ByRef userClientSecretId As String)
@@ -52,4 +52,4 @@ Public Class uploadFileToDrive
             Return file.Id
         End If
     End Function
-End Class
+    End Module
