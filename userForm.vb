@@ -55,21 +55,19 @@ Friend Class userForm
         'Get the value in the text box of the form.
         _getClientId = ClientIdInput.Text
         _getClientSecretId = ClientSecretIdInput.Text
-        'If the client Id and client secret id is not empty. 
         If _getClientId IsNot Nothing And _getClientSecretId IsNot Nothing Then
-            ''Make a copy of the file active in excel.
-            'My.Computer.FileSystem.CopyFile(_VBE.ActiveVBProject.FileName, _pathToCopyFile, True)
-            ''Call the upload file function to upload the file to the drive.
-            'fileId = uploadFileToDrive.UploadFile(_pathToCopyFile, _getClientId, _getClientSecretId)
-            '' Delete the copy of file created above.
-            'My.Computer.FileSystem.DeleteFile(_pathToCopyFile)
-            'If fileId <> "" Then
-            '    'Call the Sheets API to get the list of report.
-            '    lines = hittingEndPoint.callSheetsAPI(fileId, _getClientId, _getClientSecretId)
-            'Else
-            '    Exit Sub
-            'End If
-            lines = hittingEndPoint.parseTheFile()
+            'Make a copy of the file active in excel.
+            My.Computer.FileSystem.CopyFile(_VBE.ActiveVBProject.FileName, _pathToCopyFile, True)
+            'Call the upload file function to upload the file to the drive.
+            fileId = uploadFileToDrive.UploadFile(_pathToCopyFile, _getClientId, _getClientSecretId)
+            'Delete the copy of file created above.
+            My.Computer.FileSystem.DeleteFile(_pathToCopyFile)
+            If fileId <> "" Then
+               'Call the Sheets API to get the list of report.
+               lines = hittingEndPoint.callSheetsAPI(fileId, _getClientId, _getClientSecretId)
+            Else
+                Exit Sub
+            End If
             'If the data list count item Is Not zero Then all Api In the file Is Not supported.
             If lines.Count <> 0 Then
                 Dim userControlObject As Object = Nothing
@@ -77,7 +75,8 @@ Friend Class userForm
                 Try
                     'Create the Tool Window to show the result.
                     userControlToolWindow = New UserControlToolWindow()
-                    CreateToolWindow("Report of API used in this project", "B9055551-73E5-4507-AB69-19FF25D00F2B", userControlToolWindow)
+                    'This("B9055551-73E5-4507-AB69-19FF25D00F2B") is unique id for tool window and it is explained in the CreateToolWindow() function.
+                    CreateToolWindow("API Summary", "B9055551-73E5-4507-AB69-19FF25D00F2B", userControlToolWindow)
                     userControlToolWindow.Initialize(_VBE, lines)
                 Catch ex As Exception
                     MessageBox.Show(ex.ToString)
