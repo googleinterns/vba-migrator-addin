@@ -1,4 +1,5 @@
-;Change the .dll file path in Codebase and runtime version available in your system by going to this path C:\Windows\Microsoft.NET\Framework64 or Framework32\ after this delete this line.
+;Change the .dll file path in Codebase and runtime version available in your system by going to this path 
+;C:\Windows\Microsoft.NET\Framework64 or Framework(Corresponding to VBA Editor is 64bit/32bit) after this delete this line.
 Windows Registry Editor Version 5.00
 
 [HKEY_CURRENT_USER\Software\Microsoft\VBA\VBE\6.0\Addins64\SheetsCompatibilityAddIn.Connect]
@@ -17,13 +18,13 @@ Windows Registry Editor Version 5.00
 "Class"="SheetsCompatibilityAddIn.Connect"
 "Assembly"="SheetsCompatibilityAddIn, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
 "RuntimeVersion"="v4.0.30319"
-"CodeBase"="file:///C:/Users/JYOTI/source/repos/SheetsCompatibilityAddIn/bin/Debug/SheetsCompatibilityAddIn.DLL"  
+"CodeBase"="file:///C:/Users/UserName/source/repos/SheetsCompatibilityAddIn/bin/Debug/SheetsCompatibilityAddIn.DLL"  
 
 [HKEY_CURRENT_USER\Software\Microsoft\VBA\VBE\6.0\Addins64\SheetsCompatibilityAddIn.Connect\InprocServer32\1.0.0.0]
 "Class"="SheetsCompatibilityAddIn.Connect"
 "Assembly"="SheetsCompatibilityAddIn, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
 "RuntimeVersion"="v4.0.30319"
-"CodeBase"="file:///C:/Users/JYOTI/source/repos/SheetsCompatibilityAddIn/bin/Debug/SheetsCompatibilityAddIn.DLL"
+"CodeBase"="file:///C:/Users/UserName/source/repos/SheetsCompatibilityAddIn/bin/Debug/SheetsCompatibilityAddIn.DLL"
 
 [HKEY_CLASSES_ROOT\CLSID\{B3C60B32-6851-472F-A98E-99278ED7B539}]
 @="SheetsCompatibilityAddIn.Connect"
@@ -38,13 +39,13 @@ Windows Registry Editor Version 5.00
 "Class"="SheetsCompatibilityAddIn.Connect"
 "Assembly"="SheetsCompatibilityAddIn"
 "RuntimeVersion"="v4.0.30319"
-"CodeBase"="file:///C:\Users\JYOTI\source\repos\SheetsCompatibilityAddIn\bin\Debug/SheetsCompatibilityAddIn.DLL"
+"CodeBase"="file:///C:\Users\UserName\source\repos\SheetsCompatibilityAddIn\bin\Debug/SheetsCompatibilityAddIn.DLL"
 
 [HKEY_CLASSES_ROOT\CLSID\{B3C60B32-6851-472F-A98E-99278ED7B539}\InprocServer32\1.0.0.0]
 "Class"="SheetsCompatibilityAddIn.Connect"
 "Assembly"="SheetsCompatibilityAddIn, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
 "RuntimeVersion"="v4.0.30319"
-"CodeBase"="file:///C:/Users/JYOTI/source/repos/SheetsCompatibilityAddIn/bin/Debug/SheetsCompatibilityAddIn.DLL"
+"CodeBase"="file:///C:/Users/UserName/source/repos/SheetsCompatibilityAddIn/bin/Debug/SheetsCompatibilityAddIn.DLL"
 
 [HKEY_CLASSES_ROOT\CLSID\{B3C60B32-6851-472F-A98E-99278ED7B539}\SheetsCompatibilityAddIn.Connect]
 @="SheetsCompatibilityAddIn.Connect"
@@ -65,13 +66,13 @@ Windows Registry Editor Version 5.00
 "Class"="SheetsCompatibilityAddIn.UserControlHost"
 "Assembly"="SheetsCompatibilityAddIn, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
 "RuntimeVersion"="v4.0.30319"
-"CodeBase"="file:///C:/Users/JYOTI/source/repos/SheetsCompatibilityAddIn/bin/Debug/SheetsCompatibilityAddIn.DLL"
+"CodeBase"="file:///C:/Users/UserName/source/repos/SheetsCompatibilityAddIn/bin/Debug/SheetsCompatibilityAddIn.DLL"
 
 [HKEY_CURRENT_USER\Software\Microsoft\VBA\VBE\6.0\Addins64\SheetsCompatibilityAddIn.Connect\SheetsCompatibilityAddIn.UserControlHost\InprocServer32\1.0.0.0]
 "Class"="SheetsCompatibilityAddIn.UserControlHost"
 "Assembly"="SheetsCompatibilityAddIn, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
 "RuntimeVersion"="v4.0.30319"
-"CodeBase"="file:///C:/Users/JYOTI/source/repos/SheetsCompatibilityAddIn/bin/Debug/SheetsCompatibilityAddIn.DLL"
+"CodeBase"="file:///C:/Users/UserName/source/repos/SheetsCompatibilityAddIn/bin/Debug/SheetsCompatibilityAddIn.DLL"
 
 [HKEY_CURRENT_USER\Software\Microsoft\VBA\VBE\6.0\Addins64\SheetsCompatibilityAddIn.Connect\SheetsCompatibilityAddIn.UserControlHost\ProgId]
 @="SheetsCompatibilityAddIn.UserControlHost"
