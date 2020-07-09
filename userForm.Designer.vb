@@ -1,4 +1,18 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+'Copyright 2020 Google LLC
+'
+'Licensed under the Apache License, Version 2.0 (the "License");
+'you may not use this file except in compliance with the License.
+'You may obtain a copy of the License at
+'
+'   https://www.apache.org/licenses/LICENSE-2.0
+'
+'Unless required by applicable law or agreed to in writing, software
+'distributed under the License is distributed on an "AS IS" BASIS,
+'WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+'See the License for the specific language governing permissions and
+'limitations under the License.
+
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class userForm
     Inherits System.Windows.Forms.Form
 
@@ -28,6 +42,8 @@ Partial Class userForm
         Me.ClientSecretId = New System.Windows.Forms.Label()
         Me.Submit = New System.Windows.Forms.Button()
         Me.Cancel = New System.Windows.Forms.Button()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.pathInput = New System.Windows.Forms.TextBox()
         Me.SuspendLayout()
         '
         'ClientIdInput
@@ -64,27 +80,45 @@ Partial Class userForm
         '
         'Submit
         '
-        Me.Submit.Location = New System.Drawing.Point(266, 288)
+        Me.Submit.Location = New System.Drawing.Point(266, 281)
         Me.Submit.Name = "Submit"
-        Me.Submit.Size = New System.Drawing.Size(75, 23)
+        Me.Submit.Size = New System.Drawing.Size(79, 34)
         Me.Submit.TabIndex = 4
         Me.Submit.Text = "Submit"
         Me.Submit.UseVisualStyleBackColor = True
         '
         'Cancel
         '
-        Me.Cancel.Location = New System.Drawing.Point(365, 288)
+        Me.Cancel.Location = New System.Drawing.Point(376, 281)
         Me.Cancel.Name = "Cancel"
-        Me.Cancel.Size = New System.Drawing.Size(75, 23)
+        Me.Cancel.Size = New System.Drawing.Size(81, 34)
         Me.Cancel.TabIndex = 5
         Me.Cancel.Text = "Cancel"
         Me.Cancel.UseVisualStyleBackColor = True
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(32, 171)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(195, 17)
+        Me.Label1.TabIndex = 6
+        Me.Label1.Text = "Provide path to copy temp file"
+        '
+        'pathInput
+        '
+        Me.pathInput.Location = New System.Drawing.Point(35, 200)
+        Me.pathInput.Name = "pathInput"
+        Me.pathInput.Size = New System.Drawing.Size(422, 22)
+        Me.pathInput.TabIndex = 7
         '
         'userForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(469, 327)
+        Me.Controls.Add(Me.pathInput)
+        Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.Cancel)
         Me.Controls.Add(Me.Submit)
         Me.Controls.Add(Me.ClientSecretId)
@@ -104,4 +138,6 @@ Partial Class userForm
     Friend WithEvents ClientSecretId As Windows.Forms.Label
     Friend WithEvents Submit As Windows.Forms.Button
     Friend WithEvents Cancel As Windows.Forms.Button
+    Friend WithEvents Label1 As Windows.Forms.Label
+    Friend WithEvents pathInput As Windows.Forms.TextBox
 End Class
