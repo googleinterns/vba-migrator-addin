@@ -1,11 +1,22 @@
-﻿Imports System.Windows.Forms
+﻿'Copyright 2020 Google LLC
+'
+'Licensed under the Apache License, Version 2.0 (the "License");
+'you may not use this file except in compliance with the License.
+'You may obtain a copy of the License at
+
+'   https://www.apache.org/licenses/LICENSE-2.0
+
+'Unless required by applicable law or agreed to in writing, software
+'distributed under the License is distributed on an "AS IS" BASIS,
+'WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+'See the License for the specific language governing permissions and
+'limitations under the License.
+
+Imports System.Windows.Forms
 Imports System.Net
 Imports System.IO
 Imports System.Text
 Module hittingEndPoint
-    '@TODO If drive 'D' is not available to create a file then one should change the path.
-    Private Const _filePath As String = "D:\Json.txt"
-    
     'To understand "getAuthorizationToken()" function see this:
     'https://www.example-code.com/vbnet/hmrc_oauth2_access_token.asp 
     Private Function getAuthorizationToken(ByRef userClientId As String , ByRef userClientSecretId As String) As String
@@ -63,9 +74,10 @@ Module hittingEndPoint
         Return oauth2.AccessToken
     End Function
 
-    Public Function callSheetsAPI(ByRef fileId As String, ByRef userClientId As String , ByRef userClientSecretId As String) As List(Of String)
+    Public Function callSheetsAPI(ByRef fileId As String, ByRef userClientId As String , ByRef userClientSecretId As String, ByRef filePath As String) As List(Of String)
         Dim lines As List(Of String) = Nothing
         Const _uri As String = "https://docs.google.com/spreadsheets/vbaprocessfile?fid=" + fileId
+        filePath = filePath + "\Json.txt"
         'Calls for Authorization Token.
         Dim _bearerToken As String = getAuthorizationToken(userClientId,userClientSecretId)
         If _bearerToken <> "" Then
@@ -83,7 +95,7 @@ Module hittingEndPoint
                 Return lines
             End If
             'Create a file to store data from the response stream.
-            Dim Json As New FileStream(_filePath, FileMode.Create)
+            Dim Json As New FileStream(filePath, FileMode.Create)
             Dim read As Byte() = New Byte(255) {}
             Dim count As Integer = responseStream.Read(read, 0, read.Length)
             'Writing the response data in the file created above.
@@ -96,14 +108,15 @@ Module hittingEndPoint
             responseStream.Close()
             myWebResponse.Close()
             'Calling the function "parseTheFile()" to get the information needed from the downloaded file.
-            lines = parseTheFile()
+            lines = parseTheFile(filePath)
+            My.Computer.FileSystem.DeleteFile(filePath)
         End If
         Return lines
     End Function
     
-    Private Function parseTheFile() As List(Of String)
+    Private Function parseTheFile(ByRef filePath As String) As List(Of String)
         'Reading the downloaded file data into a string.
-        Const FileData As String = readFileData()
+        Const FileData As String = readFileData(filePath)
         'Declaration of local variable needed to store and read the file.
         Dim lines As New List(Of String) 
         Dim index As Integer
@@ -162,12 +175,12 @@ Module hittingEndPoint
         Return lines
     End Function
 
-    Private Function readFileData() As String
+    Private Function readFileData(ByRef filePath As String) As String
         Dim FileData As String = String.Empty
         Dim SReader As IO.StreamReader = Nothing
         Try
             'Reading the file which was download after hitting the Endpoint.
-            SReader = New IO.StreamReader(_filePath)
+            SReader = New IO.StreamReader(filePath)
             'Putting the file data into a string.
             Do Until SReader.EndOfStream
                 FileData &= SReader.ReadLine()
