@@ -1,6 +1,19 @@
+'Copyright 2020 Google LLC
+'
+'Licensed under the Apache License, Version 2.0 (the "License");
+'you may not use this file except in compliance with the License.
+'You may obtain a copy of the License at
+'
+'   https://www.apache.org/licenses/LICENSE-2.0
+'
+'Unless required by applicable law or agreed to in writing, software
+'distributed under the License is distributed on an "AS IS" BASIS,
+'WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+'See the License for the specific language governing permissions and
+'limitations under the License.
+
 Imports Microsoft.Vbe.Interop
 Imports System.Windows.Forms
-
 ''' <summary>
 ''' This show a user form when add-in button is clicked.
 ''' </summary>
@@ -11,13 +24,15 @@ Friend Class userForm
     Dim lines As List(Of String) = Nothing
     Dim fileId As String = Nothing
     Private _AddIn As AddIn
-    '@todo If the drive 'D' is not available to make a file in it, then one should change this path.
-    Const _pathToCopyFile As String = "D:\GoogleDrive.xlsm"
+    Private _pathToCopyFile As String = Nothing
 
     'Initialize the user form.
     Friend Sub Initialize(ByRef vbe As VBE, ByRef addIn As AddIn)
         _VBE = vbe
         _AddIn = addIn
+        ClientIdInput.Clear()
+        ClientSecretIdInput.Clear()
+        pathInput.Clear()
         'To show the form dialog.
         Me.ShowDialog()
     End Sub
@@ -55,6 +70,8 @@ Friend Class userForm
         'Get the value in the text box of the form.
         _getClientId = ClientIdInput.Text
         _getClientSecretId = ClientSecretIdInput.Text
+        _pathToCopyFile = pathInput.Text + "\GoogleDrive.xlsm"
+        'If the client Id and client secret id is not empty. 
         If _getClientId IsNot Nothing And _getClientSecretId IsNot Nothing Then
             'Make a copy of the file active in excel.
             My.Computer.FileSystem.CopyFile(_VBE.ActiveVBProject.FileName, _pathToCopyFile, True)
@@ -64,7 +81,7 @@ Friend Class userForm
             My.Computer.FileSystem.DeleteFile(_pathToCopyFile)
             If fileId <> "" Then
                'Call the Sheets API to get the list of report.
-               lines = hittingEndPoint.callSheetsAPI(fileId, _getClientId, _getClientSecretId)
+               lines = hittingEndPoint.callSheetsAPI(fileId, _getClientId, _getClientSecretId, pathInput.Text)
             Else
                 Exit Sub
             End If
@@ -81,7 +98,7 @@ Friend Class userForm
                 Catch ex As Exception
                     MessageBox.Show(ex.ToString)
                 End Try
-                'if the data list is empty and filed id is not empty then all API used in the file is supported.
+            'if the data list is empty and filed id is not empty then all API used in the file is supported.
             ElseIf fileId <> "" Then
                 MessageBox.Show("Fully Compatible!!")
             End If
