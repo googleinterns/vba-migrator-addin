@@ -16,8 +16,8 @@ Microsoft Excel 2016 (16.0.5017.1000) MSO (16.0.5017.1000) 64bit
 * Given below is the list of lines, needed to be changed in the `.reg` file:
     * `"CodeBase"="file:///`~~`C:\Users\UserName\source\repos\SheetsCompatibilityAddIn\bin\Debug\`~~`SheetsCompatibilityAddIn.DLL"` - Path of ".dll" file.
     * To change the Runtime version(v4.0.30319) go to this path C:\Windows\Microsoft.NET\Framework64 or Framework(corresponding to 64bit and 32bit VBA Editor)  in the window and use the latest version available in your system.
-    * It is also mentioned in the .reg file at the top as a comment after editing, delete that comment.
-    * If the VBA editor is 32bit then the branch (“HKEY_CURRENT_USER\Software\Microsoft\VBA\VBE\6.0\Addins64\SheetsCompatibilityAddIn.Connect”) should changed to this (“HKEY_CURRENT_USER\Software\Microsoft\VBA\VBE\6.0\Addins\SheetsCompatibilityAddIn.Connect”).
+    * It is also mentioned in the .reg file at the top as a comment. After making the changes, please delete the comment.
+    * If the VBA editor is 32bit, then the text (“HKEY_CURRENT_USER\Software\Microsoft\VBA\VBE\6.0\Addins64\SheetsCompatibilityAddIn.Connect”) should changed to this (“HKEY_CURRENT_USER\Software\Microsoft\VBA\VBE\6.0\Addins\SheetsCompatibilityAddIn.Connect”).
     * Change the version of your registry, for this refer to references.
 * Double click the '.reg' file, it will ask for your consent to make changes in your registry, after proceeding further, required changes will be made in your registry.
 * After running the '.reg' file these changes will be incorporated in the window registry under "HKEY_CURRENT_USER\Software\Microsoft\VBA\VBE\6.0\Addins64" OR "HKEY_CURRENT_USER\Software\Microsoft\VBA\VBE\6.0\Addins" corresponding to 64bit or 32bit VBA editor, “SheetsCompatibilityAddIn.Connect” will be present there.
