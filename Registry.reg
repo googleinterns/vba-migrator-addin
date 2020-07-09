@@ -1,0 +1,80 @@
+;Change the .dll file path in Codebase and runtime version available in your system by going to this path 
+;C:\Windows\Microsoft.NET\Framework64 or Framework(Corresponding to VBA Editor is 64bit/32bit) after this delete this line.
+Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\Software\Microsoft\VBA\VBE\6.0\Addins64\SheetsCompatibilityAddIn.Connect]
+@="SheetsCompatibilityAddIn.Connect"
+"Description"="Checking Compatibility with Google Sheets"
+"FriendlyName"="SheetsCompatibilityAddIn"
+"LoadBehavior"=dword:00000000
+
+[HKEY_CURRENT_USER\Software\Microsoft\VBA\VBE\6.0\Addins64\SheetsCompatibilityAddIn.Connect\Implemented Categories]
+
+[HKEY_CURRENT_USER\Software\Microsoft\VBA\VBE\6.0\Addins64\SheetsCompatibilityAddIn.Connect\Implemented Categories\{B3C60B32-6851-472F-A98E-99278ED7B539}]
+
+[HKEY_CURRENT_USER\Software\Microsoft\VBA\VBE\6.0\Addins64\SheetsCompatibilityAddIn.Connect\InprocServer32]
+@="mscoree.dll"
+"ThreadingModel"="Both"
+"Class"="SheetsCompatibilityAddIn.Connect"
+"Assembly"="SheetsCompatibilityAddIn, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+"RuntimeVersion"="v4.0.30319"
+"CodeBase"="file:///C:/Users/UserName/source/repos/SheetsCompatibilityAddIn/bin/Debug/SheetsCompatibilityAddIn.DLL"  
+
+[HKEY_CURRENT_USER\Software\Microsoft\VBA\VBE\6.0\Addins64\SheetsCompatibilityAddIn.Connect\InprocServer32\1.0.0.0]
+"Class"="SheetsCompatibilityAddIn.Connect"
+"Assembly"="SheetsCompatibilityAddIn, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+"RuntimeVersion"="v4.0.30319"
+"CodeBase"="file:///C:/Users/UserName/source/repos/SheetsCompatibilityAddIn/bin/Debug/SheetsCompatibilityAddIn.DLL"
+
+[HKEY_CLASSES_ROOT\CLSID\{B3C60B32-6851-472F-A98E-99278ED7B539}]
+@="SheetsCompatibilityAddIn.Connect"
+
+[HKEY_CLASSES_ROOT\CLSID\{B3C60B32-6851-472F-A98E-99278ED7B539}\Implemented Categories]
+
+[HKEY_CLASSES_ROOT\CLSID\{B3C60B32-6851-472F-A98E-99278ED7B539}\Implemented Categories\{B3C60B32-6851-472F-A98E-99278ED7B539}]
+
+[HKEY_CLASSES_ROOT\CLSID\{B3C60B32-6851-472F-A98E-99278ED7B539}\InprocServer32]
+@="mscoree.dll"
+"ThreadingModel"="Both"
+"Class"="SheetsCompatibilityAddIn.Connect"
+"Assembly"="SheetsCompatibilityAddIn"
+"RuntimeVersion"="v4.0.30319"
+"CodeBase"="file:///C:\Users\UserName\source\repos\SheetsCompatibilityAddIn\bin\Debug/SheetsCompatibilityAddIn.DLL"
+
+[HKEY_CLASSES_ROOT\CLSID\{B3C60B32-6851-472F-A98E-99278ED7B539}\InprocServer32\1.0.0.0]
+"Class"="SheetsCompatibilityAddIn.Connect"
+"Assembly"="SheetsCompatibilityAddIn, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+"RuntimeVersion"="v4.0.30319"
+"CodeBase"="file:///C:/Users/UserName/source/repos/SheetsCompatibilityAddIn/bin/Debug/SheetsCompatibilityAddIn.DLL"
+
+[HKEY_CLASSES_ROOT\CLSID\{B3C60B32-6851-472F-A98E-99278ED7B539}\SheetsCompatibilityAddIn.Connect]
+@="SheetsCompatibilityAddIn.Connect"
+
+[HKEY_CURRENT_USER\Software\Microsoft\VBA\VBE\6.0\Addins64\SheetsCompatibilityAddIn.Connect\SheetsCompatibilityAddIn.UserControlHost]
+@="SheetsCompatibilityAddIn.UserControlHost"
+"Description"="\"My Tool Window\""
+"FriendlyName"="\"My Tool Window\""
+"LoadBehavior"=dword:00000000
+
+[HKEY_CURRENT_USER\Software\Microsoft\VBA\VBE\6.0\Addins64\SheetsCompatibilityAddIn.Connect\SheetsCompatibilityAddIn.UserControlHost\Implemented Categories]
+
+[HKEY_CURRENT_USER\Software\Microsoft\VBA\VBE\6.0\Addins64\SheetsCompatibilityAddIn.Connect\SheetsCompatibilityAddIn.UserControlHost\Implemented Categories\{150B0A49-A7CD-467B-BCF2-FB47A87E68C4}]
+
+[HKEY_CURRENT_USER\Software\Microsoft\VBA\VBE\6.0\Addins64\SheetsCompatibilityAddIn.Connect\SheetsCompatibilityAddIn.UserControlHost\InprocServer32]
+@="mscoree.dll"
+"ThreadingModel"="Both"
+"Class"="SheetsCompatibilityAddIn.UserControlHost"
+"Assembly"="SheetsCompatibilityAddIn, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+"RuntimeVersion"="v4.0.30319"
+"CodeBase"="file:///C:/Users/UserName/source/repos/SheetsCompatibilityAddIn/bin/Debug/SheetsCompatibilityAddIn.DLL"
+
+[HKEY_CURRENT_USER\Software\Microsoft\VBA\VBE\6.0\Addins64\SheetsCompatibilityAddIn.Connect\SheetsCompatibilityAddIn.UserControlHost\InprocServer32\1.0.0.0]
+"Class"="SheetsCompatibilityAddIn.UserControlHost"
+"Assembly"="SheetsCompatibilityAddIn, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+"RuntimeVersion"="v4.0.30319"
+"CodeBase"="file:///C:/Users/UserName/source/repos/SheetsCompatibilityAddIn/bin/Debug/SheetsCompatibilityAddIn.DLL"
+
+[HKEY_CURRENT_USER\Software\Microsoft\VBA\VBE\6.0\Addins64\SheetsCompatibilityAddIn.Connect\SheetsCompatibilityAddIn.UserControlHost\ProgId]
+@="SheetsCompatibilityAddIn.UserControlHost"
+
+
